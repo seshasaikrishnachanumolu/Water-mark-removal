@@ -5,5 +5,4 @@ __pycache__/
 backend/storage/
 *.pyc
 backend/models/
-report/
 .env
