@@ -1,0 +1,14 @@
+# Optional AI extras. Install after requirements.txt:
+#   pip install -r requirements-ai.txt
+# Each feature degrades gracefully (see GET /api/ai/capabilities) if its package is missing.
+# Verified on Python 3.13.
+
+# Studio: AI auto-captions (the Whisper "base" model downloads on first use)
+faster-whisper==1.1.0
+
+# Studio: AI background removal for photos and video (otherwise photos use a weak GrabCut fallback)
+rembg==2.0.67
+
+# Runtime for rembg AND for the LaMa inpainting engine in the remover. The ~200MB LaMa
+# model downloads automatically on first use into backend/models/.
+onnxruntime==1.32.0

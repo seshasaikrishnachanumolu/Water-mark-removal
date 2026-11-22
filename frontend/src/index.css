@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+/* Design tokens: ivory paper, deep ink, muted gold + sage. */
+@theme {
+  --color-paper: #f6f1e7;
+  --color-cream: #fbf8f2;
+  --color-ink: #1d2433;
+  --color-gold: #b08a3e;
+  --color-sage: #55766a;
+  --color-line: #e2d9c6;
+  /* Editor (dark workspace) */
+  --color-ed-bg: #0e1117;
+  --color-ed-panel: #151a23;
+  --color-ed-raise: #1d2430;
+  --color-ed-line: #2a3242;
+  --color-ed-text: #e8eaf0;
+  --color-ed-mute: #8b93a7;
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
+
+@layer components {
+  /* Studio cards */
+  .card {
+    background: var(--color-cream);
+    border: 1px solid var(--color-line);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 2px rgb(29 36 51 / 0.04), 0 8px 24px -12px rgb(29 36 51 / 0.12);
+  }
+}
+
+/* ---------- Landing page illustration (pure CSS "before / after") ---------- */
+.scene {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background:
+    radial-gradient(circle at 78% 24%, #f7d9a0 0 7%, transparent 7.5%),
+    linear-gradient(180deg, #f2c9a0 0%, #e9b4a0 38%, #8aa59a 38.1%, #5d7f73 100%);
+}
+.scene::before,
+.scene::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  width: 70%;
+  height: 48%;
+  background: #3f6154;
+  border-radius: 100% 100% 0 0;
+}
+.scene::after {
+  left: 35%;
+  width: 80%;
+  height: 40%;
+  background: #34524a;
+}
+.scene .mark {
+  position: absolute;
+  right: 5%;
+  bottom: 8%;
+  z-index: 2;
+  padding: 0.25rem 0.6rem;
+  border: 2px solid rgb(255 255 255 / 0.9);
+  border-radius: 0.35rem;
+  color: rgb(255 255 255 / 0.92);
+  font: 700 0.95rem var(--font-sans);
+  letter-spacing: 0.12em;
+  animation: wm-fade 6s ease-in-out infinite;
+}
+.scene .sweep {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: linear-gradient(100deg, transparent 40%, rgb(255 255 255 / 0.45) 50%, transparent 60%);
+  transform: translateX(-100%);
+  animation: wm-sweep 6s ease-in-out infinite;
+}
+@keyframes wm-fade {
+  0%, 30% { opacity: 1; }
+  45%, 85% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes wm-sweep {
+  0%, 25% { transform: translateX(-100%); }
+  45% { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
+}
+.state-label {
+  position: relative;
+  display: inline-block;
+  min-width: 7rem;
+  height: 1.25rem;
+}
+.state-label span {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+/* Same timeline as .mark so the caption always matches the picture. */
+.state-label .before { animation: wm-fade 6s ease-in-out infinite; }
+.state-label .after { opacity: 0; animation: wm-fade-inv 6s ease-in-out infinite; }
+@keyframes wm-fade-inv {
+  0%, 30% { opacity: 0; }
+  45%, 85% { opacity: 1; }
+  100% { opacity: 0; }
+}
+/* Phone mockup for the Shorts section */
+.phone {
+  position: relative;
+  width: 11rem;
+  aspect-ratio: 9 / 19;
+  padding: 0.5rem;
+  border-radius: 2rem;
+  background: var(--color-ink);
+  box-shadow: 0 30px 50px -20px rgb(29 36 51 / 0.5);
+}
+.phone .screen {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: #7a9a90;
+}
+.phone .blur-bg {
+  position: absolute;
+  inset: -10%;
+  background: linear-gradient(180deg, #f2c9a0, #e9b4a0 40%, #5d7f73 70%);
+  filter: blur(14px);
+}
+.phone .fg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 34%;
+  height: 24%;
+  background: linear-gradient(180deg, #f2c9a0 0%, #e9b4a0 45%, #5d7f73 45.1%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene .mark,
+  .scene .sweep,
+  .state-label .before,
+  .state-label .after {
+    animation: none;
+  }
+  .state-label .after {
+    display: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}

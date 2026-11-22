@@ -1,0 +1,9 @@
+node_modules/
+dist/
+__pycache__/
+.venv/
+backend/storage/
+*.pyc
+backend/models/
+report/
+.env

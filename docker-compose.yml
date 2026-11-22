@@ -1,0 +1,19 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        WITH_AI: "0" # set to "1" for captions, AI background removal and LaMa
+    ports:
+      - "8000:8000"
+    environment:
+      FILE_TTL_HOURS: "6" # uploads and results older than this are deleted
+      RATE_LIMIT_PER_MIN: "120" # POSTs per IP per minute
+    volumes:
+      - data:/app/backend/storage
+      - models:/app/backend/models
+    restart: unless-stopped
+
+volumes:
+  data:
+  models:
